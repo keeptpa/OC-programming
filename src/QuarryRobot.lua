@@ -168,7 +168,7 @@ function quarry()
             break
         end
 
-        if(y==sea_level-11)
+        if(y==sea_level-10)
         then
             break
          end
