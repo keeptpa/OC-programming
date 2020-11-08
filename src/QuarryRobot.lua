@@ -114,7 +114,7 @@ function check()
             do
             empty()
         end
-        while(powerc() <= 0.2)
+        while(powerc() <= 0.9)
             do
             sleep(5)
             end
