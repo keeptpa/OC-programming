@@ -1,5 +1,7 @@
 local ro = require("robot")
 local co = require("computer")
+local component = require("component")
+local inv = component.inventory_controller
 
 function powerc()
      power = co.energy() / co.maxEnergy()
@@ -55,9 +57,9 @@ function back_home(temp)
     ro.back() --back to base position
      
     ro.select(1)
-    ro.equip()
+    inv.equip()
     ro.dropDown()
-    ro.equip()
+    inv.equip()
 end
 
 function back_work(temp)
@@ -70,8 +72,9 @@ function back_work(temp)
           while(ro.suckDown()==false)
           do
                ro.suckDown()
+               os.sleep(5)
           end
-    ro.equip()
+    inv.equip()
      
     ro.forward()
     while (x~=0 or y~=0 or z~=0)
@@ -119,7 +122,7 @@ function check()
     temp[2] = y
     temp[3] = z
     temp[4] = direction
-    if (powerc() <= 0.2 or ro.count(ro.inventorySize()) >= 1 or y%5==0)
+    if (powerc() <= 0.2 or ro.count(ro.inventorySize()) >= 1)
         then
         back_home(temp)
         while(ro.count(ro.inventorySize()) >= 1)
@@ -128,9 +131,9 @@ function check()
         end
         while(powerc() <= 0.9)
             do
-            co.sleep(5)
+            os.sleep(5)
             end
-        co.sleep(10)
+        os.sleep(10)
         back_work(temp)
     end
 end
