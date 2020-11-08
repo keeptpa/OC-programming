@@ -53,6 +53,11 @@ function back_home(temp)
             end
     end
     ro.back() --back to base position
+     
+    ro.select(1)
+    ro.equip()
+    ro.dropDown()
+    ro.equip()
 end
 
 function back_work(temp)
@@ -61,6 +66,13 @@ function back_work(temp)
     y = temp[2]
     z = temp[3]
     direction = temp[4]
+    ro.select(1)
+          while(ro.suckDown()==false)
+          do
+               ro.suckDown()
+          end
+    ro.equip()
+     
     ro.forward()
     while (x~=0 or y~=0 or z~=0)
     do
@@ -107,7 +119,7 @@ function check()
     temp[2] = y
     temp[3] = z
     temp[4] = direction
-    if (powerc() <= 0.2 or ro.count(ro.inventorySize()) >= 1)
+    if (powerc() <= 0.2 or ro.count(ro.inventorySize()) >= 1 or y%5==0)
         then
         back_home(temp)
         while(ro.count(ro.inventorySize()) >= 1)
@@ -116,8 +128,9 @@ function check()
         end
         while(powerc() <= 0.9)
             do
-            sleep(5)
+            co.sleep(5)
             end
+        co.sleep(10)
         back_work(temp)
     end
 end
@@ -167,11 +180,6 @@ function quarry()
             back00()
             break
         end
-
-        if(y==sea_level-10)
-        then
-            break
-         end
 
     ro.turnRight()
     direction=direction+1
