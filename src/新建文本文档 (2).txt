@@ -1,0 +1,79 @@
+local robot = require("robot")
+local computer = require("computer")
+local component = require("component")
+local ic = component.inventory_controller
+local generator = component.generator
+local redstone = component.redstone
+
+function empower()
+    if(computer.energy()<=19000 and computer.energy()>=10000)
+    then
+        robot.select(4)
+        generator.insert(1)
+
+    elseif(computer.energy()<=10000)
+    then
+        computer.shutdown()
+    end
+end
+
+function drop(slot)
+    robot.select(slot)
+    robot.dropDown(1)
+end
+
+function fillstack()
+    robot.select(1)
+    if(robot.count(1)~=32)
+    then
+        robot.suckUp(32-robot.count(1))
+    end
+    os.sleep(0.5)
+    
+    robot.select(3)
+    if(robot.count(3)~=64)
+    then
+        robot.turnRight()
+        robot.suck(64-robot.count(3))
+        robot.turnLeft()
+    end
+    os.sleep(0.5)
+    
+    robot.select(2)
+    if(robot.count(2)~=64)
+    then
+        robot.turnLeft()
+        robot.suck(64-robot.count(2))
+        robot.turnRight()
+    end
+    os.sleep(0.5)
+    
+    if(robot.count(4)~=64)
+    then
+    robot.select(4)
+        robot.suck(64-robot.count(4))
+    end
+    os.sleep(0.5)
+end
+
+function work()
+if(component.redstone.getInput(2)>0)
+then
+drop(1)
+drop(2)
+drop(3)
+os.sleep(8)
+robot.select(5)
+robot.suckDown()
+robot.suckDown()
+robot.suckDown()
+fillstack()
+end
+end
+
+while(true)
+do
+work()
+empower()
+os.sleep(3)
+end
