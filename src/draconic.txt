@@ -88,7 +88,7 @@ end
 
 function rms() -- 反应堆最重要的系统，监视、上报、闭环控制
     print("RMS inited. Now let us get everything in position.")
-    if(temp <= 6000 and temp > 3000)-- 这其实是比较保守，并非最大的温度设置。
+    if(temp <= 7500 and temp > 3000)-- 这其实是比较保守，并非最大的温度设置。
     then
         monitor() -- 上报
         print("Everything normal.")
